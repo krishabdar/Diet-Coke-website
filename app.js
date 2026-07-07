@@ -45,10 +45,15 @@ function preloadImages() {
             }
         };
         img.onerror = () => {
-            console.error(`Failed to load frame: ${img.src}`);
-            loadedCount++;
-            if (loadedCount === totalFrames) {
-                onPreloadComplete();
+            if (img.src.includes('/JPG/')) {
+                // Fallback to lowercase jpg directory (defensive case-sensitivity)
+                img.src = img.src.replace('/JPG/', '/jpg/');
+            } else {
+                console.error(`Failed to load frame: ${img.src}`);
+                loadedCount++;
+                if (loadedCount === totalFrames) {
+                    onPreloadComplete();
+                }
             }
         };
         images.push(img);
@@ -67,8 +72,10 @@ function onPreloadComplete() {
 // Resize canvas to cover/fit container
 function resizeCanvas() {
     const scale = window.devicePixelRatio || 1;
-    canvas.width = canvas.clientWidth * scale;
-    canvas.height = canvas.clientHeight * scale;
+    const width = canvas.clientWidth || window.innerWidth;
+    const height = canvas.clientHeight || window.innerHeight;
+    canvas.width = width * scale;
+    canvas.height = height * scale;
     ctx.scale(scale, scale);
 
     // Redraw current frame
