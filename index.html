@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Diet Coke - Midnight Refresh</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&amp;family=Hanken+Grotesk:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff0022",
+                        "primary-container": "#cc001b",
+                        "background": "#0a0b0d",
+                        "surface": "#121418",
+                        "surface-variant": "#1c1f24",
+                        "on-surface": "#e1e3e4",
+                        "on-surface-variant": "#a3a6a9",
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Syncopate", "sans-serif"],
+                        "headline-md": ["Syncopate", "sans-serif"],
+                        "display-lg": ["Syncopate", "sans-serif"],
+                        "body-md": ["Hanken Grotesk", "sans-serif"],
+                        "body-lg": ["Hanken Grotesk", "sans-serif"],
+                        "label-bold": ["Hanken Grotesk", "sans-serif"],
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xl": "80px",
+                        "2xl": "120px",
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24
+        }
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(255, 0, 34, 0.5), 0 0 30px rgba(255, 0, 34, 0.3)
+        }
+        .text-neon {
+            text-shadow: 0 0 10px rgba(255, 0, 34, 0.6)
+        }
+        .glass-panel {
+            background: rgba(28, 31, 36, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05)
+        }
+        .map-bg {
+            background-image: radial-gradient(circle at center, transparent 0%, #0a0b0d 70%), url(https://lh3.googleusercontent.com/aida-public/AB6AXuA_FK1bGThqndYWcbNz_qpb5VR_STyzvWPURjKVNo1BjAy4CxaK02Zcy4Q7zuVvaGtwb2l_Bgsr2AQvAoOzKRW_oJt-VqQV2LDq-vfovCXnxF9U9C0VZCzKYQ7aJYW0O7iTA2oTVZZwYXqEa0gDCqJ81WL74LoCB1bFLAwph_Q8eBD1JOnDxWAiicYUJD-4ebajQV46cKTCuACRemWQRzMBJSWiqHbY3VTTEEURWKvUdDavh_hZ4V298Q);
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay
+        }
+        /* Preloader styling */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0b0d;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .loader-container.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+    <!-- Preloader Screen -->
+    <div id="loader" class="loader-container">
+        <div class="text-center w-[300px]">
+            <div class="font-headline-lg font-bold text-3xl tracking-[0.15em] text-white mb-6 uppercase text-neon select-none">
+                Diet Coke
+            </div>
+            <div class="w-full h-[3px] bg-white/5 rounded-sm overflow-hidden mb-3">
+                <div id="loader-bar" class="w-0 h-full bg-primary shadow-[0_0_10px_#ff0022] transition-all duration-100"></div>
+            </div>
+            <div id="loader-text" class="text-xs text-on-surface-variant font-body-md tracking-wider">
+                Syncing sequence... 0%
+            </div>
+        </div>
+    </div>
+
+    <!-- TopNavBar -->
+    <header class="bg-transparent fixed top-0 w-full z-50 transition-all duration-300">
+        <div class="flex justify-between items-center max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop h-20">
+            <a class="text-headline-md font-headline-md text-primary tracking-tighter hover:text-primary-container transition-colors duration-300 text-neon" href="#">
+                Diet Coke
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a class="text-label-bold font-label-bold text-white border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-300" href="#">Home</a>
+                <a class="text-label-bold font-label-bold text-on-surface-variant hover:text-white pb-1 transition-colors duration-300 border-b-2 border-transparent hover:border-white/30" href="#ritual-section">The Shift</a>
+                <a class="text-label-bold font-label-bold text-on-surface-variant hover:text-white pb-1 transition-colors duration-300 border-b-2 border-transparent hover:border-white/30" href="#ingredients-section">Fuel</a>
+                <a class="text-label-bold font-label-bold text-on-surface-variant hover:text-white pb-1 transition-colors duration-300 border-b-2 border-transparent hover:border-white/30" href="#locator-section">Locate</a>
+            </nav>
+            <button class="hidden md:inline-flex items-center justify-center bg-primary text-white text-label-bold font-label-bold px-md py-sm rounded-none border border-primary neon-glow hover:bg-transparent hover:text-primary transition-all duration-300 uppercase tracking-widest">
+                Acquire
+            </button>
+            <button class="md:hidden text-white p-2">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section (Scroll Animation Across Entire Section Background) -->
+        <section id="hero-section" class="relative w-full h-[120vh] bg-gradient-to-br from-[#0a0b0d] via-[#121418] to-[#1c1f24] border-b border-white/5 overflow-hidden">
+            <!-- Sticky Wrapper -->
+            <div class="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+                
+                <!-- Full-Screen Canvas Backdrop Layer -->
+                <div class="absolute inset-0 z-10 flex items-center justify-center opacity-40 md:opacity-100">
+                    <canvas id="animation-canvas" class="w-full h-full object-contain transition-opacity duration-300"></canvas>
+                </div>
+                
+                <!-- Glow backing behind text/can -->
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-full filter blur-3xl opacity-20 pointer-events-none z-10"></div>
+
+                <!-- Sticky Hero Text Overlay (Fades out after 30% scroll) -->
+                <div id="hero-text-overlay" class="absolute inset-0 z-20 flex flex-col items-center justify-start pt-32 md:pt-40 text-center pointer-events-none transition-opacity duration-200">
+                    <h1 class="text-[48px] md:text-[72px] lg:text-[80px] leading-[1.1] font-display-lg text-white mb-2 font-bold uppercase tracking-tighter text-neon select-none">
+                        Diet Coke
+                    </h1>
+                    <p class="text-xs md:text-sm font-label-bold text-gray-400 uppercase tracking-[0.25em] font-semibold select-none">
+                        The genz's choice
+                    </p>
+                </div>
+
+                <!-- Grid content layout -->
+                <div class="relative z-20 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-2 gap-gutter items-center h-full py-xl pointer-events-none">
+                    
+                    <!-- Left Column: Empty space (copy removed as requested) -->
+                    <div class="col-span-1"></div>
+
+                    <!-- Right Column: Only holds the minimal floating counter in bottom-right -->
+                    <div class="col-span-1 flex flex-col justify-end items-end h-full pb-10 md:pb-12 pointer-events-auto">
+                        <span id="hud-frame-num" class="text-[10px] font-headline-md text-on-surface-variant font-bold tracking-wider">001/231</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- The Midnight Ritual Section -->
+        <section id="ritual-section" class="py-2xl bg-surface border-b border-white/5 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent opacity-50 blur-3xl"></div>
+            <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+                    <div class="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1">
+                        <h2 class="text-[32px] md:text-[48px] font-headline-md text-white uppercase tracking-wider mb-sm leading-tight">The Midnight Ritual</h2>
+                        <div class="h-1 w-20 bg-primary mb-md neon-glow"></div>
+                        <p class="text-body-lg font-body-md text-on-surface-variant mb-lg leading-relaxed">
+                            When the city powers down, your network lights up. The midnight ritual isn't just about staying awake; it's about shifting into a higher gear. With a perfectly chilled silver can in hand, you unlock a state of flow where ideas crystallize and the noise fades away.
+                        </p>
+                        <ul class="space-y-4 text-on-surface-variant">
+                            <li class="flex items-start">
+                                <span class="material-symbols-outlined text-primary mr-3 mt-1 text-[20px]">check_circle</span>
+                                <span>Uninterrupted creative momentum</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="material-symbols-outlined text-primary mr-3 mt-1 text-[20px]">check_circle</span>
+                                <span>The catalyst for late-night innovation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="material-symbols-outlined text-primary mr-3 mt-1 text-[20px]">check_circle</span>
+                                <span>A signature taste that commands attention</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lg:col-span-7 order-1 lg:order-2 relative">
+                        <div class="glass-panel p-2 relative z-10">
+                            <img alt="Diet Coke Midnight Ritual" class="w-full h-auto object-cover contrast-110 brightness-95 border border-white/10" src="ritual_image.jpg"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="absolute -bottom-8 -right-8 w-64 h-64 border border-primary/20 rounded-full blur-sm"></div>
+                        <div class="absolute -top-8 -left-8 w-32 h-32 border border-white/10 rounded-full blur-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pure Ingredients Section -->
+        <section id="ingredients-section" class="py-2xl bg-background border-b border-white/5 relative">
+            <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+                <div class="text-center mb-xl">
+                    <h2 class="text-[32px] md:text-[48px] font-headline-md text-white uppercase tracking-wider mb-4">Pure Ingredients,</h2>
+                    <h2 class="text-[32px] md:text-[48px] font-headline-md text-primary uppercase tracking-wider text-neon">Zero Compromise</h2>
+                    <p class="text-body-lg text-on-surface-variant mt-6 max-w-2xl mx-auto">Engineered to deliver maximum satisfaction without the excess. Every drop is calibrated for performance.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Benefit 1 -->
+                    <div class="glass-panel p-xl flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+                        <div class="w-20 h-20 rounded-full bg-surface-variant flex items-center justify-center border border-white/10 mb-6 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(255,0,34,0.2)] transition-all duration-300">
+                            <span class="material-symbols-outlined text-primary text-[40px]">exposure_zero</span>
+                        </div>
+                        <h3 class="text-2xl font-headline-md text-white mb-4 uppercase tracking-wide">0 Calories</h3>
+                        <p class="text-body-md text-on-surface-variant">Absolute lightness. Fuel your drive without the metabolic drag.</p>
+                    </div>
+                    <!-- Benefit 2 -->
+                    <div class="glass-panel p-xl flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+                        <div class="w-20 h-20 rounded-full bg-surface-variant flex items-center justify-center border border-white/10 mb-6 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(255,0,34,0.2)] transition-all duration-300">
+                            <span class="material-symbols-outlined text-primary text-[40px]">block</span>
+                        </div>
+                        <h3 class="text-2xl font-headline-md text-white mb-4 uppercase tracking-wide">0 Sugar</h3>
+                        <p class="text-body-md text-on-surface-variant">No spikes, no crashes. Just a steady baseline of heightened alertness.</p>
+                    </div>
+                    <!-- Benefit 3 -->
+                    <div class="glass-panel p-xl flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+                        <div class="w-20 h-20 rounded-full bg-surface-variant flex items-center justify-center border border-white/10 mb-6 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(255,0,34,0.2)] transition-all duration-300">
+                            <span class="material-symbols-outlined text-primary text-[40px]">bubble_chart</span>
+                        </div>
+                        <h3 class="text-2xl font-headline-md text-white mb-4 uppercase tracking-wide">Crisp Carbonation</h3>
+                        <p class="text-body-md text-on-surface-variant">Micro-bubbles designed to hit the palate with precision and an icy snap.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features-section" class="py-2xl bg-surface border-b border-white/5 relative">
+            <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+                <div class="text-center mb-xl">
+                    <h2 class="text-[32px] md:text-[48px] font-headline-md text-white uppercase tracking-wider">Engineered for Clarity</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                    <!-- Feature 1 -->
+                    <div class="bg-surface-variant/50 backdrop-blur-sm p-lg border-l-2 border-primary hover:bg-surface-variant transition-all duration-300 group">
+                        <span class="material-symbols-outlined text-primary text-[32px] mb-md group-hover:text-neon transition-all">bolt</span>
+                        <h3 class="text-xl font-headline-md text-white mb-sm uppercase tracking-wide">Zero Distractions</h3>
+                        <p class="text-body-md font-body-md text-on-surface-variant">0 calories. 0 sugar. Just pure, sharp focus to keep you dialing in when the world sleeps.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="bg-surface-variant/50 backdrop-blur-sm p-lg border-l-2 border-primary hover:bg-surface-variant transition-all duration-300 group">
+                        <span class="material-symbols-outlined text-primary text-[32px] mb-md group-hover:text-neon transition-all">ac_unit</span>
+                        <h3 class="text-xl font-headline-md text-white mb-sm uppercase tracking-wide">Metallic Chill</h3>
+                        <p class="text-body-md font-body-md text-on-surface-variant">An instantly recognizable, ice-cold profile that shocks the senses and resets the mind.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="bg-surface-variant/50 backdrop-blur-sm p-lg border-l-2 border-primary hover:bg-surface-variant transition-all duration-300 group">
+                        <span class="material-symbols-outlined text-primary text-[32px] mb-md group-hover:text-neon transition-all">blur_on</span>
+                        <h3 class="text-xl font-headline-md text-white mb-sm uppercase tracking-wide">Crisp Bite</h3>
+                        <p class="text-body-md font-body-md text-on-surface-variant">Aggressive carbonation designed to cut through fatigue. Effervescence with edge.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Find Your Spark / Locator Section -->
+        <section id="locator-section" class="py-2xl relative overflow-hidden bg-background map-bg border-b border-white/5">
+            <div class="absolute inset-0 bg-[#0a0b0d]/80 mix-blend-multiply"></div>
+            <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop relative z-10 flex flex-col items-center text-center">
+                <span class="material-symbols-outlined text-primary text-[48px] mb-6 neon-glow rounded-full">location_on</span>
+                <h2 class="text-[32px] md:text-[48px] font-headline-md text-white uppercase tracking-wider mb-6">Find Your Spark</h2>
+                <p class="text-body-lg text-on-surface-variant mb-xl max-w-2xl">
+                    Locate the nearest distribution point. Secure your supply of Midnight Refreshment and keep the momentum going.
+                </p>
+                <div class="glass-panel p-2 flex flex-col sm:flex-row max-w-lg w-full mb-8">
+                    <input class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder:text-gray-500 px-6 py-4 outline-none font-body-md" placeholder="Enter Zip or City" type="text"/>
+                    <button class="bg-primary text-white text-label-bold font-label-bold px-8 py-4 uppercase tracking-widest hover:bg-primary-container transition-colors duration-300">
+                        Scan Area
+                    </button>
+                </div>
+                <div class="flex items-center space-x-4 text-sm text-gray-500 font-label-bold uppercase tracking-wider">
+                    <span class="w-12 h-px bg-white/20"></span>
+                    <span>Global Coverage</span>
+                    <span class="w-12 h-px bg-white/20"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter-section" class="py-2xl bg-surface relative overflow-hidden">
+            <div class="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop text-center relative z-10">
+                <h2 class="text-[32px] md:text-[48px] font-headline-md text-white mb-sm uppercase tracking-wide">Join the Network</h2>
+                <p class="text-body-lg font-body-md text-on-surface-variant mb-lg">Access exclusive intel, late-night drops, and fuel for the grind.</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input class="flex-1 bg-surface-variant border border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-none px-4 py-sm text-body-md font-body-md text-white placeholder:text-gray-600 transition-all" placeholder="ENTER COMM LINK" required="" type="email"/>
+                    <button class="bg-primary text-white text-label-bold font-label-bold px-lg py-sm rounded-none hover:bg-primary-container neon-glow transition-all duration-300 sm:w-auto w-full uppercase tracking-widest" type="submit">
+                        Sync
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#050607] text-on-surface-variant w-full py-xl border-t border-white/5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="col-span-1 md:col-span-2 lg:col-span-1 mb-8 lg:mb-0">
+                <h4 class="text-xl font-headline-md text-primary mb-md uppercase tracking-wider text-neon">Diet Coke</h4>
+                <p class="text-body-md font-body-md text-gray-500">
+                    The Night Shift Refreshment.
+                </p>
+            </div>
+            <div class="col-span-1 flex flex-col space-y-sm">
+                <span class="text-label-bold font-label-bold text-white mb-2 uppercase tracking-wide">Nav</span>
+                <a class="text-body-md font-body-md text-gray-500 hover:text-primary transition-colors duration-200" href="#">Home</a>
+                <a class="text-body-md font-body-md text-gray-500 hover:text-primary transition-colors duration-200" href="#ritual-section">The Shift</a>
+                <a class="text-body-md font-body-md text-gray-500 hover:text-primary transition-colors duration-200" href="#ingredients-section">Fuel</a>
+            </div>
+            <div class="col-span-1 flex flex-col space-y-sm">
+                <span class="text-label-bold font-label-bold text-white mb-2 uppercase tracking-wide">Protocols</span>
+                <a class="text-body-md font-body-md text-gray-500 hover:text-primary transition-colors duration-200" href="#">Privacy</a>
+                <a class="text-body-md font-body-md text-gray-500 hover:text-primary transition-colors duration-200" href="#">Terms</a>
+            </div>
+            <div class="col-span-1 flex flex-col space-y-sm">
+                <span class="text-label-bold font-label-bold text-gray-300 mb-2">Connect</span>
+                <a class="text-body-md font-body-md text-gray-500 hover:text-primary transition-colors duration-200" href="#">Contact Us</a>
+                <div class="flex space-x-4 mt-2 text-gray-500">
+                    <a class="hover:text-primary transition-colors duration-200" href="#"><span class="material-symbols-outlined">share</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop mt-12 pt-8 border-t border-white/5 flex justify-between items-center text-body-md font-body-md text-gray-600 text-sm">
+            <p>© 2024 Diet Coke. System Active.</p>
+        </div>
+    </footer>
+
+    <!-- Main Logic Script -->
+    <script src="app.js"></script>
+</body>
+</html>
